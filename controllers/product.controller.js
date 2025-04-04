@@ -22,13 +22,12 @@ async function getAll(req, res) {
         const productList = await models.Product.findAll()
 
         if ( productList.length == 0 ) {
-            res.status(404).json({status: 404, msg : "Pas de produits trouvés"})
+            res.status(200).json({status: 200, msg : "Pas de produits trouvés"})
             return
         }
 
         res.status(200).json({status: 200, msg : "Ok", result: productList})
     } catch (error) {
-        console.log(error)
         res.sendStatus(500)
     }
 }
@@ -54,6 +53,7 @@ async function updateOne(req, res) {
         const product = await models.Product.findByPk(req.params.id)
         if ( !product ) {
             res.status(404).json({status: 404, msg : "Pas de produit trouvé"})
+            return
         }
 
         Object.assign(product, updatedProduct)
@@ -68,7 +68,7 @@ async function updateOne(req, res) {
 async function deleteOne(req, res) {
     try {
         const { id } = req.params
-        const product = models.Product.destroy({where: { id: id }})
+        const product = await models.Product.destroy({where: { id: id }})
 
         if ( !product ) {
             res.status(404).json({status: 404, msg : "Ce produit n'existe pas"})

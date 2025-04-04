@@ -1,7 +1,5 @@
 import { Router } from "express";
 import { addToCart, getAll, updateCart, deleteCart } from "../controllers/cart.controller.js";
-import multer from "../middlewares/multer.js";
-import passport from "passport";
 
 const router = Router()
 
